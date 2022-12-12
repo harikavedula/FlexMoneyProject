@@ -42,6 +42,7 @@ def register(request):
             Reservations.objects.create(resid=n1+1,userid=n+1,payamount=500,batch=batch,month=month1,year=year1)
         print(len(User.objects.filter()))
         return redirect('/')
+
 def home(request):
     user_id=request.session['uid']
     todays_date = date.today()
@@ -59,11 +60,24 @@ def home(request):
 
         for x in res:
             d1['batch']=x.batch 
-    print(d1)
-    data={
+        print(d1)
+        data={
         'context':d1
-    }
-    return render(request,"home.html",data)
+        }   
+        return render(request,"home.html",data)
+    else:
+        if request.method=='POST':
+            x=len(Reservations.objects.all())
+            todays_date = date.today()
+            month1 = todays_date.month
+            year1=todays_date.year
+            Reservations.objects.create(userid=int(user_id),resid=x+1,payamount=500,batch=request.POST['batch'],month=month1,year=year1)
+            return redirect("/home/")
+        return render(request,"expired.html")
+    
+
+    
+    
         
 
 
