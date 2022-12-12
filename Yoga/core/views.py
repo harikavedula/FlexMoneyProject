@@ -4,6 +4,11 @@ from .models import *
 from datetime import date
 
 def login(request):
+    
+    user=User.objects.all()
+    for x in user:
+        print(x.name)
+    
     if request.method=='POST':
         umail=request.POST['email']
         pswd=request.POST['pswd']
@@ -40,15 +45,17 @@ def register(request):
             month1 = todays_date.month
             year1=todays_date.year
             Reservations.objects.create(resid=n1+1,userid=n+1,payamount=500,batch=batch,month=month1,year=year1)
-        print(len(User.objects.filter()))
-        return redirect('/')
+            request.session['uid']=str(n+1)
+            return redirect('/home/')
 
 def home(request):
     user_id=request.session['uid']
     todays_date = date.today()
     month1 = todays_date.month
     year1=todays_date.year 
+    
     res=Reservations.objects.filter(userid=int(user_id),month=month1,year=year1)
+    
     if len(res)>0:
         user=User.objects.filter(userid=user_id)
         d1={}
@@ -67,10 +74,22 @@ def home(request):
         return render(request,"home.html",data)
     else:
         if request.method=='POST':
+            mail=request.POST['email']
+            pswd=request.POST['password']
+            user_id=int(request.session['uid'])
+            user=User.objects.filter(userid=user_id)
+            p=False
+            for x in user:
+                if x.email==mail and x.password==pswd:
+                    p=True
+            if not p:
+                print(1111)
+                return HttpResponse("INVALID CREDENTIALS")
             x=len(Reservations.objects.all())
             todays_date = date.today()
             month1 = todays_date.month
             year1=todays_date.year
+
             Reservations.objects.create(userid=int(user_id),resid=x+1,payamount=500,batch=request.POST['batch'],month=month1,year=year1)
             return redirect("/home/")
         return render(request,"expired.html")
