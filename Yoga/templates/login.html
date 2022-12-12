@@ -294,7 +294,7 @@ footer a {
 	</div> -->
 	
 	<div class="form-container sign-in-container-left overlay-left" style="margin-left: 10%;">
-		<form action="/" method="post" >
+		<form action="/login/" method="post" >
 			{% csrf_token %}
 			<h1>Sign in</h1>
             <br>
@@ -307,14 +307,14 @@ footer a {
 				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 			</div>
 			<span>or use your account</span> -->
-			<input type="email" placeholder="Email" name="mail"/>
+			<input type="email" placeholder="Email" name="email"/>
 			<input type="password" placeholder="password" name="pswd"/>
-			<a href="#">Forgot your password?</a>
+			<!-- <a href="#">Forgot your password?</a> -->
 			<button>Sign In</button>
 		</form>
 	</div>
 	<div class="form-container sign-in-container-right overlay-right" style="margin-right: 10%;">
-		<form action="/" method="post" id="register">
+		<form action="register/" method="post" id="register">
 			{% csrf_token %}
 			<h1>Sign Up</h1>
             <br>
@@ -327,14 +327,14 @@ footer a {
 			</div>
 			<span>or use your account</span> -->
 			<input type="text" placeholder="Full name" name="name" required/>
-			<input type="email" placeholder="Email" name="mail" required/>
+			<input type="email" placeholder="Email" name="email" required/>
 			
-  <select id="batch" required aria-placeholder="Batch time">
+  <select id="batch" required aria-placeholder="Batch time" name="batch">
     <option value="" style="float: left;" disabled selected>Select batch no:</option>
-    <option value="1"> <span style="float: left;">6AM-7AM</span></option>
-    <option value="2"> 7AM-8AM</option>
-    <option value="3">8AM-9AM</option>
-    <option value="4">5PM-6PM</option>
+    <option value="6AM-7AM"> <span style="float: left;">6AM-7AM</span></option>
+    <option value="7AM-8AM"> 7AM-8AM</option>
+    <option value="8AM-9AM">8AM-9AM</option>
+    <option value="5PM-6PM">5PM-6PM</option>
     
   
 </div>
